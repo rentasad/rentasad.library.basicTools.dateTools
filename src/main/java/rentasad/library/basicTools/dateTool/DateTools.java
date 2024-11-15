@@ -17,9 +17,7 @@ import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 /**
- * 
- * @author mst
- *
+ * Utility class providing various date-related functions and constants.
  */
 public class DateTools
 {
@@ -326,9 +324,10 @@ public class DateTools
 	}
 
 	/**
+	 * Converts the given time in milliseconds into a SQL date string in the format "yyyy-MM-dd".
 	 *
-	 * @param dateString
-	 * @return
+	 * @param timeInMilliseconds The time in milliseconds to be converted.
+	 * @return A string representing the date in "yyyy-MM-dd" format.
 	 */
 	public static String getTimeInMillisecondsFromSqlDateString(long timeInMilliseconds)
 	{
@@ -343,8 +342,10 @@ public class DateTools
 	}
 
 	/**
+	 * Generates a date string representing the current date in the format "YYYY-MM-DD".
+	 * The date is obtained using the GregorianCalendar instance.
 	 *
-	 * @return "YYYY-MM-DD"
+	 * @return a String representing the current date in "YYYY-MM-DD" format
 	 */
 	public static String getDateStringFromNow()
 	{
@@ -358,18 +359,17 @@ public class DateTools
 	}
 
 	/**
+	 * Generates a string representing the current date and time in the format "YYYY-MM-DD_HH-MM".
 	 *
-	 * Description:
-	 *
-	 * @return YYYY-MM-DD_HH_mm Creation: 05.10.2015 by mst
+	 * @return a string representing the current date and time in the format "YYYY-MM-DD_HH-MM"
 	 */
 	public static String getDateTimeStringFromNow()
 	{
 		GregorianCalendar calendar = new GregorianCalendar();
 		int month = calendar.get(GregorianCalendar.MONTH) + 1;
-		String dayString = getInt2StringWithForwardZero(Integer.valueOf(calendar.get(GregorianCalendar.DAY_OF_MONTH)));
-		String monthString = getInt2StringWithForwardZero(Integer.valueOf(month));
-		String yearString = Integer.toString(calendar.get(GregorianCalendar.YEAR)).toString();
+		String dayString = getInt2StringWithForwardZero(calendar.get(GregorianCalendar.DAY_OF_MONTH));
+		String monthString = getInt2StringWithForwardZero(month);
+		String yearString = Integer.toString(calendar.get(GregorianCalendar.YEAR));
 		String hourString = getInt2StringWithForwardZero(calendar.get(GregorianCalendar.HOUR_OF_DAY));
 		String minutesString = getInt2StringWithForwardZero(calendar.get(GregorianCalendar.MINUTE));
 
@@ -377,11 +377,10 @@ public class DateTools
 	}
 
 	/**
-	 * Gibt bei einer Zahl kleiner 9 eine fuehrende Null aus. Eine Zahl groesser 9
-	 * wird nur als Stringumwandlung zurueckgegeben
+	 * Converts an integer to a string, adding a leading zero if the integer is less than 10.
 	 *
-	 * @param value
-	 * @return
+	 * @param value the integer to be converted
+	 * @return a string representation of the integer, with a leading zero if the integer is less than 10
 	 */
 	private static String getInt2StringWithForwardZero(int value)
 	{
@@ -498,11 +497,10 @@ public class DateTools
 	}
 
 	/**
-	 * Gibt den Sonntag einer KW zurueck
+	 * Returns the date of the Sunday for the specified calendar week (KW).
 	 *
-	 * @param kw   - Kalenderwoche
-	 * @param year - Jahr
-	 * @return
+	 * @param kw the calendar week number (1-53)
+	 * @return the Date representing the Sunday of the specified calendar week
 	 */
 	public static Date getSundayFromKW(int kw)
 	{
@@ -513,11 +511,10 @@ public class DateTools
 	}
 
 	/**
-	 * Gibt den Sonntag einer KW zurueck
+	 * Calculates and returns the date of the Sunday for the given week number.
 	 *
-	 * @param kw   - Kalenderwoche
-	 * @param year - Jahr
-	 * @return
+	 * @param kw The week number (ISO-8601 standard) for which the Sunday date should be computed.
+	 * @return The date of the Sunday for the specified week number as a java.sql.Date object.
 	 */
 	public static java.sql.Date getSundayFromKWSqlDate(int kw)
 	{
@@ -873,11 +870,11 @@ public class DateTools
 	}
 
 	/**
-	 * 
-	 * Description: Return array with Dates between Dates
-	 * 
-	 * @param dateFrom
-	 * @param DateTo   Creation: 02.09.2016 by mst
+	 * Generates a list of Date objects representing each day between two given dates, inclusive.
+	 *
+	 * @param dateFrom the starting date of the range
+	 * @param dateTo the ending date of the range
+	 * @return a list of Date objects from dateFrom to dateTo
 	 */
 	public static List<Date> getDateListBetweenTwoDates(Date dateFrom, Date dateTo)
 	{
@@ -902,12 +899,11 @@ public class DateTools
 	}
 
 	/**
-	 * 
-	 * Description: return Monday to Friday Dates as Date[]
-	 * 
-	 * @param year
-	 * @param kw
-	 * @return Creation: 03.02.2017 by mst
+	 * Generates a list of Date objects representing Monday to Friday of a specified week number (KW) in a given year.
+	 *
+	 * @param year the specified year
+	 * @param kw the week number (KW)
+	 * @return a list of Date objects from Monday to Friday of the given week and year
 	 */
 	public static List<Date> getDatesFromKWMondayToFriday(int year, int kw)
 	{
@@ -1134,17 +1130,14 @@ public class DateTools
 	}
 
 	/**
-	 * 
-	 * Description: return SQL.Timestamp as String
-	 * 
-	 * @param fileNameTimestampAfterProvide
-	 * @return Creation: 23.08.2018 by mst
+	 *
+	 * @param timestamp
+	 * @return
 	 */
 	public static Object getSqlTimeStampStringFromTimeStamp(Timestamp timestamp)
 	{
 		Date date = new Date(timestamp.getTime());
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return dateFormat.format(date);
+		return getSQLTimeStampFromDate(date);
 	}
 
 	/**
@@ -1159,25 +1152,22 @@ public class DateTools
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		Date parsedDate = dateFormat.parse(timeStampString);
-		Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-		return timestamp;
+		return new Timestamp(parsedDate.getTime());
 	}
 
 	/**
-	 * 
-	 * Return {@link Timestamp} from TimestampString in Format yyyy-MM-dd hh:mm:ss
-	 * 
-	 * @param timeStampString "yyyy-MM-dd hh:mm:ss.SSS"
-	 * @return
-	 * @throws ParseException Creation: 11.07.2019 by mst
+	 * Converts an ISO 8601 formatted timestamp string to a {@link Timestamp}.
+	 *
+	 * @param timeStampString the ISO 8601 formatted timestamp string.
+	 * @return the corresponding {@link Timestamp} object.
+	 * @throws ParseException if the timestamp string cannot be parsed.
 	 */
 	public static Timestamp getTimeStampFromISO8601TimeStampString(final String timeStampString) throws ParseException
 	{
 		OffsetDateTime odt = OffsetDateTime.parse(timeStampString);
 		Instant instant = odt.toInstant(); // Instant is always in UTC.
 		java.util.Date date = Date.from(instant);
-		Timestamp timestamp = new java.sql.Timestamp(date.getTime());
-		return timestamp;
+		return new Timestamp(date.getTime());
 	}
 
 }
