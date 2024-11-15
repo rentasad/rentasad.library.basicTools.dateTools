@@ -936,25 +936,17 @@ public class DateTools
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
 		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-		switch (dayOfWeek)
+		return switch (dayOfWeek)
 		{
-		case Calendar.MONDAY:
-			return "MONDAY";
-		case Calendar.TUESDAY:
-			return "TUESDAY";
-		case Calendar.WEDNESDAY:
-			return "WEDNESDAY";
-		case Calendar.THURSDAY:
-			return "THURSDAY";
-		case Calendar.FRIDAY:
-			return "FRIDAY";
-		case Calendar.SATURDAY:
-			return "SATURDAY";
-		case Calendar.SUNDAY:
-			return "SUNDAY";
-		default:
-			throw new IllegalStateException();
-		}
+			case Calendar.MONDAY -> "MONDAY";
+			case Calendar.TUESDAY -> "TUESDAY";
+			case Calendar.WEDNESDAY -> "WEDNESDAY";
+			case Calendar.THURSDAY -> "THURSDAY";
+			case Calendar.FRIDAY -> "FRIDAY";
+			case Calendar.SATURDAY -> "SATURDAY";
+			case Calendar.SUNDAY -> "SUNDAY";
+			default -> throw new IllegalStateException();
+		};
 
 	}
 
